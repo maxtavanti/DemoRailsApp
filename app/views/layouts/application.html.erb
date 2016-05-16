@@ -26,9 +26,13 @@
 					 <li class="<%= 'active' if current_page?(root_path) %>">
 					 	<%= link_to 'Home', root_path %>
 					 </li>
+					 
+					 <% if user_signed_in? and (current_user.has_role?(:admin) or current_user.has_role?(:organizer)) %>
 					 <li class="<%= 'active' if current_page?(events_path) %>">
 					 	<%= link_to 'Events', events_path %>
 					 </li>
+					 <% end %>
+					 
 					 <% if user_signed_in? %>
 					   <li>
 					   <%= link_to('Logout', destroy_user_session_path, :method => :delete) %>        

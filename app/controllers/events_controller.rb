@@ -4,7 +4,7 @@ class EventsController < ApplicationController
   
   before_action :authenticate_user!
   
-  before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :set_event, only: [:show, :edit, :update, :destroy, :apply]
   
   after_action :verify_authorized
 
@@ -82,6 +82,19 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def apply
+    authorize @event
+    participation = @event.participations.new(:user => current_user)
+    
+    respond_to do |format|
+      if participation.save
+        format.html { redirect_to root_path, notice: "Thank to apply: #{@event.title}." }
+      else
+        format.html { redirect_to root_path, alert: "Samething was wrong please try again." }
+      end
     end
   end
 

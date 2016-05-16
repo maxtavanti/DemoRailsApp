@@ -6,5 +6,6 @@ class Event < ActiveRecord::Base
   
   # Relations
   belongs_to :user
+  has_many :participations
   
 end

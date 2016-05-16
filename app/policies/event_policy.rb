@@ -18,7 +18,7 @@ class EventPolicy < ApplicationPolicy
   end
   
   def index?
-    true
+    user.has_role?(:admin) or user.has_role?(:organizer)
   end
   
   def show?
@@ -43,6 +43,10 @@ class EventPolicy < ApplicationPolicy
   
   def destroy?
     user.has_role?(:admin) or (user.has_role?(:organizer) and record.user_id = user.id)
+  end
+  
+  def apply?
+    not user.participation_events.include?(record)
   end
   
 end

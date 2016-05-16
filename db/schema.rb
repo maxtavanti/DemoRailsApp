@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516141057) do
+ActiveRecord::Schema.define(version: 20160516151017) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "name"
@@ -46,6 +46,26 @@ ActiveRecord::Schema.define(version: 20160516141057) do
 
   add_index "organizers", ["name", "resource_type", "resource_id"], name: "index_organizers_on_name_and_resource_type_and_resource_id"
   add_index "organizers", ["name"], name: "index_organizers_on_name"
+
+  create_table "partecipations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "partecipations", ["event_id"], name: "index_partecipations_on_event_id"
+  add_index "partecipations", ["user_id"], name: "index_partecipations_on_user_id"
+
+  create_table "participations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "participations", ["event_id"], name: "index_participations_on_event_id"
+  add_index "participations", ["user_id"], name: "index_participations_on_user_id"
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

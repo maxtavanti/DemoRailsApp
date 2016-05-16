@@ -9,5 +9,7 @@ class User < ActiveRecord::Base
   # Relations
   
   has_many :events
+  has_many :participations
+  has_many :participation_events, through: :participations, source: :event
   
 end
